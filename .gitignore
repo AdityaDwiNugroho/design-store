@@ -52,9 +52,6 @@ next-env.d.ts
 data/subscribers.json
 
 # Ignore all docs files dangerous file 
-doc/ADMIN_SETUP.md
-docs/API_RESTORED.md
-docs/CORPORATE-NEWSLETTER-GUIDE.md
-docs/NEWSLETTER-DATABASE.md
-docs/NEWSLETTER-SETUP.md
-docs/newsletter-guide.md
+docs/*
+docs/!SECURITY.md
+docs/!STRIPE.md
