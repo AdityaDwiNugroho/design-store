@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { CreditCard, ArrowLeft, DollarSign, Receipt, AlertCircle, Shield, Smartphone, Building } from 'lucide-react';
+import { CreditCard, ArrowLeft, DollarSign, Receipt, AlertCircle, Shield } from 'lucide-react';
 
 export default function PaymentBillingFAQ() {
   const faqs = [

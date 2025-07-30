@@ -1,46 +1,15 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { CheckCircle, Download, Mail, Home } from 'lucide-react';
 
-export default function CheckoutSuccess() {
-  const searchParams = useSearchParams();
-  const sessionId = searchParams.get('session_id');
-  const [sessionData, setSessionData] = useState<{
-    id: string;
-    amount_total: number;
-    customer_email: string;
-    payment_status: string;
-  } | null>(null);
-  const [loading, setLoading] = useState(true);
+interface CheckoutSuccessProps {
+  searchParams: Promise<{
+    session_id?: string;
+  }>;
+}
 
-  useEffect(() => {
-    if (sessionId) {
-      // Verify the session and get order details
-      fetch(`/api/checkout/session?session_id=${sessionId}`)
-        .then(res => res.json())
-        .then(data => {
-          setSessionData(data);
-          setLoading(false);
-        })
-        .catch(error => {
-          console.error('Error fetching session:', error);
-          setLoading(false);
-        });
-    } else {
-      setLoading(false);
-    }
-  }, [sessionId]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
-    );
-  }
+export default async function CheckoutSuccess({ searchParams }: CheckoutSuccessProps) {
+  const params = await searchParams;
+  const sessionId = params.session_id;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -60,21 +29,13 @@ export default function CheckoutSuccess() {
           </p>
 
           {/* Order Details */}
-          {sessionData && (
+          {sessionId && (
             <div className="bg-gray-50 rounded-lg p-6 mb-8">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Order Details</h2>
               <div className="text-left space-y-2">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Order ID:</span>
-                  <span className="font-medium">{sessionId?.slice(-8).toUpperCase()}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Email:</span>
-                  <span className="font-medium">{sessionData.customer_email || 'N/A'}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Amount Paid:</span>
-                  <span className="font-medium">${((sessionData.amount_total || 0) / 100).toFixed(2)}</span>
+                  <span className="font-medium">{sessionId.slice(-8).toUpperCase()}</span>
                 </div>
               </div>
             </div>
