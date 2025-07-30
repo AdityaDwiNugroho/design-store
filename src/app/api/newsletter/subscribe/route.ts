@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { addSubscriber, getAllSubscribers, initializeDatabase } from '@/lib/newsletter-db';
+import { isAdminAuthenticated, getClientIP as getAdminClientIP, isAdminIPAllowed } from '@/lib/admin-auth';
 
 // Initialize database on startup
 initializeDatabase();
@@ -109,8 +110,37 @@ async function simulateEmailService(email: string) {
 }
 
 // Get all subscribers (for admin purposes)
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    // Check IP restriction first
+    const clientIP = getAdminClientIP(request);
+    console.log(`Newsletter GET request from IP: ${clientIP}`);
+    
+    if (!isAdminIPAllowed(clientIP)) {
+      console.log(`IP ${clientIP} not allowed`);
+      return NextResponse.json(
+        { error: 'Access denied from this IP address' },
+        { status: 403 }
+      );
+    }
+
+    // Check admin authentication using the proper auth system
+    const cookies = Object.fromEntries(
+      request.cookies.getAll().map(cookie => [cookie.name, cookie.value])
+    );
+    
+    console.log('Available cookies:', Object.keys(cookies));
+    console.log('Admin auth cookie present:', !!cookies.admin_auth);
+    
+    if (!isAdminAuthenticated(cookies)) {
+      console.log('Admin authentication failed');
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
+    console.log('Admin authentication successful, fetching subscribers');
     const { subscribers, total } = getAllSubscribers();
     
     return NextResponse.json({

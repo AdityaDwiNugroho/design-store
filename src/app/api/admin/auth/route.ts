@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       maxAge: 24 * 60 * 60, // 24 hours
-      path: '/admin'
+      path: '/' // Changed from '/admin' to '/' for broader access
     });
     
     console.log(`Successful admin login from IP: ${clientIP}`);
@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function DELETE(request: NextRequest) {
+export async function DELETE() {
   const response = NextResponse.json(
     { success: true, message: 'Logged out successfully' },
     { status: 200 }

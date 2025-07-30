@@ -53,7 +53,7 @@ export function isAdminAuthenticated(cookies: { [key: string]: string }): boolea
     }
     
     return validateAdminPassword(password);
-  } catch (error) {
+  } catch {
     return false;
   }
 }

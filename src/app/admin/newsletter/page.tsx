@@ -24,26 +24,26 @@ export default function NewsletterAdmin() {
   const [sendStatus, setSendStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   useEffect(() => {
+    const checkAuthentication = async () => {
+      try {
+        const response = await fetch('/api/admin/auth', {
+          method: 'GET',
+          credentials: 'include',
+        });
+        
+        if (response.ok) {
+          setAuthenticated(true);
+          fetchSubscribers();
+        }
+      } catch (error) {
+        console.error('Auth check failed:', error);
+      } finally {
+        setCheckingAuth(false);
+      }
+    };
+
     checkAuthentication();
   }, []);
-
-  const checkAuthentication = async () => {
-    try {
-      const response = await fetch('/api/admin/auth', {
-        method: 'GET',
-        credentials: 'include',
-      });
-      
-      if (response.ok) {
-        setAuthenticated(true);
-        fetchSubscribers();
-      }
-    } catch (error) {
-      console.error('Auth check failed:', error);
-    } finally {
-      setCheckingAuth(false);
-    }
-  };
 
   const handleLogout = async () => {
     try {
@@ -67,8 +67,14 @@ export default function NewsletterAdmin() {
     setLoading(true);
     try {
       const response = await fetch('/api/newsletter/subscribe', {
+        method: 'GET',
         credentials: 'include',
       });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
       setSubscribers(data.subscribers || []);
       setTotalSubscribers(data.total || 0);

@@ -176,7 +176,7 @@ async function sendRealEmails(subject: string, message: string, recipients: stri
                         
                         <!-- Company Info -->
                         <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="width: 100%; border-top: 1px solid #cbd5e0; padding-top: 20px; margin-top: 20px;">
-                          <tr>
+                          <tr style="text-align: center;">
                             <td style="text-align: center;">
                               <p style="color: #a0aec0; font-size: 12px; margin: 0; line-height: 1.5;">
                                 <strong style="color: #4a5568;">Digital Store</strong><br>
