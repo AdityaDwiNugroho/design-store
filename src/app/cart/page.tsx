@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useCart } from '@/lib/cart-context';
 import { X, ShoppingBag, ArrowRight } from 'lucide-react';
 import { QuantitySelector } from '@/components/QuantitySelector';
+import CheckoutButton from '@/components/CheckoutButton';
 
 export default function CartPage() {
   const { cart, dispatch } = useCart();
@@ -143,9 +144,7 @@ export default function CartPage() {
               </div>
             </div>
             
-            <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-lg font-semibold mt-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
-              Proceed to Checkout
-            </button>
+            <CheckoutButton />
             
             <Link
               href="/products"

@@ -166,5 +166,24 @@ export const useCart = () => {
   if (!context) {
     throw new Error('useCart must be used within a CartProvider');
   }
-  return context;
+  
+  // Add helper functions
+  const getTotalPrice = () => {
+    return context.cart.items.reduce((total, item) => {
+      return total + (item.product.price * item.quantity);
+    }, 0);
+  };
+
+  const getItemCount = () => {
+    return context.cart.items.reduce((total, item) => {
+      return total + item.quantity;
+    }, 0);
+  };
+
+  return {
+    ...context,
+    items: context.cart.items,
+    getTotalPrice,
+    getItemCount,
+  };
 };
