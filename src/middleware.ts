@@ -50,12 +50,11 @@ function validateRequest(request: NextRequest): boolean {
     return false;
   }
   
-  // Block requests with suspicious paths
+  // Block requests with suspicious paths (but allow our admin routes)
   const path = request.nextUrl.pathname;
   const suspiciousPaths = [
     '/.env',
     '/wp-admin',
-    '/admin',
     '/phpmyadmin',
     '/wp-login.php',
     '/config',
@@ -63,6 +62,16 @@ function validateRequest(request: NextRequest): boolean {
     '/backup',
     '/database',
   ];
+  
+  // Allow our specific admin routes
+  if (path.startsWith('/admin/newsletter')) {
+    return true;
+  }
+  
+  // Block other admin paths
+  if (path.includes('/admin') && !path.startsWith('/admin/newsletter')) {
+    return false;
+  }
   
   if (suspiciousPaths.some(suspiciousPath => path.includes(suspiciousPath))) {
     return false;

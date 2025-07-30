@@ -32,6 +32,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -45,3 +46,15 @@ next-env.d.ts
 
 # local env files
 .env
+
+# Newsletter database (keep subscriber data persistent)
+# Remove the line below if you want to backup subscribers to git
+data/subscribers.json
+
+# Ignore all docs files dangerous file 
+doc/ADMIN_SETUP.md
+docs/API_RESTORED.md
+docs/CORPORATE-NEWSLETTER-GUIDE.md
+docs/NEWSLETTER-DATABASE.md
+docs/NEWSLETTER-SETUP.md
+docs/newsletter-guide.md

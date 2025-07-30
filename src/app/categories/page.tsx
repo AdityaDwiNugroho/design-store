@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { categories } from '@/lib/data';
 import { Package, Palette, Code, Image as ImageIcon, Layers } from 'lucide-react';
+import NewsletterSignUp from '@/components/NewsletterSignUp';
 
 const categoryIcons = {
   'ui-kits': Layers,
@@ -57,26 +58,13 @@ export default function CategoriesPage() {
       </div>
 
       {/* Featured Categories Banner */}
-      <div className="mt-16 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8 lg:p-12">
-        <div className="text-center">
-          <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-            Can&apos;t find what you&apos;re looking for?
-          </h2>
-          <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-            We&apos;re constantly adding new products and categories. 
-            Subscribe to our newsletter to get notified of new releases.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none w-full sm:w-auto"
-            />
-            <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors w-full sm:w-auto">
-              Subscribe
-            </button>
-          </div>
-        </div>
+      <div className="mt-16">
+        <NewsletterSignUp 
+          title="Can't find what you're looking for?"
+          description="We're constantly adding new products and categories. Subscribe to our newsletter to get notified of new releases."
+          variant="default"
+          className="max-w-2xl mx-auto"
+        />
       </div>
     </div>
   );
