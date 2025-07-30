@@ -2,13 +2,14 @@ import Link from 'next/link';
 import { CheckCircle, Download, ArrowRight } from 'lucide-react';
 
 interface SuccessPageProps {
-  searchParams: {
+  searchParams: Promise<{
     session_id?: string;
-  };
+  }>;
 }
 
-export default function SuccessPage({ searchParams }: SuccessPageProps) {
-  const sessionId = searchParams.session_id;
+export default async function SuccessPage({ searchParams }: SuccessPageProps) {
+  const params = await searchParams;
+  const sessionId = params.session_id;
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
