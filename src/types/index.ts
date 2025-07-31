@@ -10,6 +10,13 @@ export interface Product {
   downloadUrl?: string;
   preview?: string;
   featured?: boolean;
+  // GitHub repository integration
+  repository?: {
+    owner: string;
+    name: string;
+    private: boolean;
+    description?: string;
+  };
 }
 
 export interface CartItem {
@@ -23,4 +30,4 @@ export interface Cart {
   itemCount: number;
 }
 
-export type Category = 'ui-kits' | 'templates' | 'icons' | 'illustrations' | 'code-snippets' | 'all';
+export type Category = 'ui-kits' | 'templates' | 'icons' | 'illustrations' | 'code-snippets' | 'design-systems' | 'all';

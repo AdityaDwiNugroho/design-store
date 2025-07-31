@@ -51,7 +51,22 @@ next-env.d.ts
 # Remove the line below if you want to backup subscribers to git
 data/subscribers.json
 
+# Products database (keep product data persistent)
+# Remove the line below if you want to backup products to git
+data/products.json
+
+# User uploaded images (keep uploads separate from git)
+# Remove the line below if you want to backup uploaded images to git
+public/uploads/*
+!public/uploads/.gitkeep
+
 # Ignore all docs files dangerous file 
 docs/*
 docs/!SECURITY.md
 docs/!STRIPE.md
+
+# Ignore all markdown files but allow README files
+*.md
+!README.md
+!readme.md
+!Readme.md

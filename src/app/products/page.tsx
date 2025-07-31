@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import ProductCard from '@/components/ProductCard';
-import { products, categories } from '@/lib/data';
+import { categories } from '@/lib/data';
 import { Category, Product } from '@/types';
 import { Filter } from 'lucide-react';
 
@@ -12,6 +12,27 @@ function ProductsContent() {
   const [selectedCategory, setSelectedCategory] = useState<Category>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch products from API
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch('/api/products');
+      if (response.ok) {
+        const data = await response.json();
+        setProducts(data.products || []);
+      }
+    } catch (error) {
+      console.error('Failed to fetch products:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Initialize search from URL params
   useEffect(() => {
@@ -66,6 +87,14 @@ function ProductsContent() {
       .map(item => item.product);
   };
 
+  // Calculate category counts dynamically
+  const getCategoriesWithCounts = () => {
+    return categories.map(category => ({
+      ...category,
+      count: products.filter(product => product.category === category.id).length
+    }));
+  };
+
   // Filter products by category and search
   const getFilteredProducts = (): Product[] => {
     let filteredProducts = selectedCategory === 'all' 
@@ -111,7 +140,20 @@ function ProductsContent() {
           <div className="bg-white p-6 rounded-lg border border-gray-200 sticky top-24">
             <h3 className="font-semibold text-gray-900 mb-4">Categories</h3>
             <div className="space-y-2">
-              {categories.map((category) => (
+              {/* All Products Category */}
+              <button
+                onClick={() => setSelectedCategory('all')}
+                className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-left transition-colors ${
+                  selectedCategory === 'all'
+                    ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                    : 'hover:bg-gray-50 text-gray-700'
+                }`}
+              >
+                <span>All Products</span>
+                <span className="text-sm text-gray-500">({products.length})</span>
+              </button>
+              
+              {getCategoriesWithCounts().map((category) => (
                 <button
                   key={category.id}
                   onClick={() => setSelectedCategory(category.id as Category)}
@@ -148,17 +190,32 @@ function ProductsContent() {
         <div className="flex-1">
           <div className="mb-4 flex items-center justify-between">
             <p className="text-gray-600">
-              Showing {filteredProducts.length} of {products.length} products
+              {loading ? 'Loading...' : `Showing ${filteredProducts.length} of ${products.length} products`}
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="bg-white rounded-xl border border-gray-200 overflow-hidden animate-pulse">
+                  <div className="h-48 bg-gray-200"></div>
+                  <div className="p-6">
+                    <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                    <div className="h-3 bg-gray-200 rounded mb-4 w-3/4"></div>
+                    <div className="h-6 bg-gray-200 rounded w-1/3"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          )}
           
-          {filteredProducts.length === 0 && (
+          {!loading && filteredProducts.length === 0 && (
             <div className="text-center py-12">
               <div className="text-gray-400 mb-4">
                 <svg className="w-16 h-16 mx-auto" fill="currentColor" viewBox="0 0 20 20">

@@ -26,6 +26,12 @@ export default function CheckoutButton() {
         body: JSON.stringify({ items }),
       });
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Checkout API error:', errorData);
+        throw new Error(`Checkout failed: ${errorData.error || 'Unknown error'}`);
+      }
+
       const { url } = await response.json();
 
       if (url) {

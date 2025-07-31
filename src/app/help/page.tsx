@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Search, MessageCircle, Book, Download, CreditCard, Shield, ArrowRight } from 'lucide-react';
+import { Search, MessageCircle, Book, Download, CreditCard, Shield, ArrowRight, Github } from 'lucide-react';
 import { useState } from 'react';
 
 export default function HelpCenter() {
@@ -21,6 +21,9 @@ export default function HelpCenter() {
     { type: 'category', title: 'Payment & Billing', description: 'Questions about payments, refunds, and billing', link: '/faq/payment', keywords: ['payment', 'billing', 'refund', 'credit card', 'invoice'] },
     { type: 'category', title: 'Licenses & Usage', description: 'Understanding your rights and usage permissions', link: '/faq/licenses', keywords: ['license', 'usage', 'commercial', 'rights', 'permissions'] },
     { type: 'category', title: 'Account & Orders', description: 'Managing your account and order history', link: '/faq/account', keywords: ['account', 'orders', 'profile', 'history', 'settings'] },
+    
+    // Repository Access
+    { type: 'feature', title: 'GitHub Repository Access', description: 'Get access to private repositories after purchase', link: '/repository-access', keywords: ['github', 'repository', 'access', 'source code', 'private', 'git'] },
     
     // Articles
     { type: 'article', title: 'How to download your purchased products', description: 'Complete step-by-step guide to accessing your digital downloads', link: '/articles/how-to-download', keywords: ['download', 'purchased', 'products', 'guide', 'access'] },
@@ -57,6 +60,18 @@ export default function HelpCenter() {
         "Where can I find my download links?",
         "Can I re-download my products?",
         "What file formats are included?"
+      ]
+    },
+    {
+      icon: Github,
+      title: "Repository Access",
+      description: "Get access to private GitHub repositories after purchase",
+      link: "/repository-access",
+      items: [
+        "Request access to private repositories",
+        "View complete source code",
+        "Clone and download repositories",
+        "Access exclusive development resources"
       ]
     },
     {
@@ -166,6 +181,35 @@ export default function HelpCenter() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Repository Access Banner */}
+        <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-8 rounded-xl text-white mb-12">
+          <div className="flex items-start">
+            <Github className="w-12 h-12 mr-6 mt-1 flex-shrink-0" />
+            <div className="flex-1">
+              <h2 className="text-2xl font-bold mb-3">GitHub Repository Access</h2>
+              <p className="text-blue-100 mb-6 text-lg">
+                Some products include access to private GitHub repositories with complete source code, 
+                documentation, and development resources. Get read-only access after purchase.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link
+                  href="/repository-access"
+                  className="inline-flex items-center px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-colors"
+                >
+                  <Github className="w-5 h-5 mr-2" />
+                  Request Repository Access
+                </Link>
+                <Link
+                  href="/faq/downloads"
+                  className="inline-flex items-center px-6 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-blue-600 transition-colors"
+                >
+                  Learn More
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <Link href="/contact" className="bg-white p-6 rounded-xl border border-gray-200 hover:shadow-lg transition-shadow group">

@@ -1,10 +1,9 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Search, X } from 'lucide-react';
 import Link from 'next/link';
 import OptimizedImage from './OptimizedImage';
-import { products } from '@/lib/data';
 import { Product } from '@/types';
 import { sanitizeSearchQuery, rateLimiter } from '@/lib/security';
 
@@ -17,11 +16,29 @@ export default function SearchBar({ className = '' }: SearchBarProps) {
   const [results, setResults] = useState<Product[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [products, setProducts] = useState<Product[]>([]);
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Fetch products on component mount
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch('/api/products');
+      if (response.ok) {
+        const data = await response.json();
+        setProducts(data.products || []);
+      }
+    } catch (error) {
+      console.error('Failed to fetch products for search:', error);
+    }
+  };
+
   // Search function with fuzzy matching and security
-  const searchProducts = (searchQuery: string): Product[] => {
+  const searchProducts = useCallback((searchQuery: string): Product[] => {
     if (!searchQuery.trim()) return [];
 
     // Sanitize the search query to prevent injection
@@ -86,7 +103,7 @@ export default function SearchBar({ className = '' }: SearchBarProps) {
       .sort((a, b) => b.score - a.score)
       .slice(0, 8)
       .map(item => item.product);
-  };
+  }, [products]);
 
   // Update search results when query changes
   useEffect(() => {
@@ -98,7 +115,7 @@ export default function SearchBar({ className = '' }: SearchBarProps) {
     }, 150); // Debounce search
 
     return () => clearTimeout(timeoutId);
-  }, [query]);
+  }, [query, products, searchProducts]); // Added searchProducts dependency
 
   // Close dropdown when clicking outside
   useEffect(() => {

@@ -211,7 +211,7 @@ export default function ContactUs() {
               </p>
               <div className="flex space-x-4">
                 <a
-                  href="https://github.com"
+                  href="https://github.com/AdityaDwiNugroho"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
@@ -219,7 +219,7 @@ export default function ContactUs() {
                   <Github className="w-6 h-6 text-gray-700" />
                 </a>
                 <a
-                  href="https://twitter.com"
+                  href="https://twitter.com/ProgrammerADN"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
@@ -227,7 +227,7 @@ export default function ContactUs() {
                   <Twitter className="w-6 h-6 text-gray-700" />
                 </a>
                 <a
-                  href="https://linkedin.com"
+                  href="https://linkedin.comhttps://www.linkedin.com/in/aditya-dwi-nugroho-75057827a/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"

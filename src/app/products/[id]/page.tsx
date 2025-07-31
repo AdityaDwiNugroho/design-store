@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
-import { getProductById } from '@/lib/data';
+import { getProductById } from '@/lib/products-db';
 import { Product } from '@/types';
-import { Star, Check } from 'lucide-react';
+import { Star, Check, Github, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import OptimizedImage from '@/components/OptimizedImage';
 import { AddToCart } from '@/components/AddToCart';
@@ -118,6 +118,53 @@ function ProductDetails({ product }: { product: Product }) {
             
             <AddToCart product={product} showQuantitySelector={true} />
           </div>
+
+          {/* Repository Access */}
+          {product.repository && (
+            <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-xl border border-blue-200">
+              <div className="flex items-start">
+                <Github className="w-6 h-6 text-blue-600 mr-4 mt-1 flex-shrink-0" />
+                <div className="flex-1">
+                  <h3 className="font-semibold text-gray-900 mb-2">GitHub Repository Access Included</h3>
+                  <p className="text-gray-600 mb-4">
+                    This product includes access to a private GitHub repository with complete source code, 
+                    documentation, and development resources.
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                    <div className="flex items-center text-gray-700">
+                      <Check className="w-4 h-4 text-green-600 mr-2" />
+                      <span>Complete source code</span>
+                    </div>
+                    <div className="flex items-center text-gray-700">
+                      <Check className="w-4 h-4 text-green-600 mr-2" />
+                      <span>Read-only access</span>
+                    </div>
+                    <div className="flex items-center text-gray-700">
+                      <Check className="w-4 h-4 text-green-600 mr-2" />
+                      <span>Clone and download</span>
+                    </div>
+                    <div className="flex items-center text-gray-700">
+                      <Check className="w-4 h-4 text-green-600 mr-2" />
+                      <span>Documentation included</span>
+                    </div>
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-blue-200">
+                    <p className="text-sm text-gray-600 mb-3">
+                      After purchase, request repository access with your GitHub username:
+                    </p>
+                    <Link
+                      href="/repository-access"
+                      className="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                    >
+                      <Github className="w-4 h-4 mr-2" />
+                      Request Repository Access
+                      <ExternalLink className="w-4 h-4 ml-1" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Features */}
           <div>

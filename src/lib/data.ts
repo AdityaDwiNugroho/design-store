@@ -79,9 +79,10 @@ export const getProductById = (id: string) => {
 };
 
 export const categories = [
-  { id: 'ui-kits', name: 'UI Kits', count: products.filter(p => p.category === 'ui-kits').length },
-  { id: 'templates', name: 'Templates', count: products.filter(p => p.category === 'templates').length },
-  { id: 'icons', name: 'Icons', count: products.filter(p => p.category === 'icons').length },
-  { id: 'illustrations', name: 'Illustrations', count: products.filter(p => p.category === 'illustrations').length },
-  { id: 'code-snippets', name: 'Code Snippets', count: products.filter(p => p.category === 'code-snippets').length },
+  { id: 'ui-kits', name: 'UI Kits' },
+  { id: 'templates', name: 'Templates' },
+  { id: 'icons', name: 'Icons' },
+  { id: 'illustrations', name: 'Illustrations' },
+  { id: 'code-snippets', name: 'Code Snippets' },
+  { id: 'design-systems', name: 'Design Systems' },
 ];

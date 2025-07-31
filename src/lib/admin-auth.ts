@@ -16,10 +16,24 @@ export function getClientIP(request: NextRequest): string {
 export function isAdminIPAllowed(ip: string): boolean {
   const allowedIPs = process.env.ALLOWED_ADMIN_IPS?.split(',').map(ip => ip.trim()) || [];
   
-  // Add common localhost variations
-  const localhostVariations = ['127.0.0.1', '::1', 'localhost'];
+  // Add common localhost variations - be more permissive for local development
+  const localhostVariations = [
+    '127.0.0.1', 
+    '::1', 
+    'localhost', 
+    '::ffff:127.0.0.1',
+    '::ffff:localhost',
+    'unknown' // For cases where IP detection fails
+  ];
   
-  return allowedIPs.includes(ip) || localhostVariations.includes(ip);
+  console.log(`Admin access attempt from IP: ${ip}`);
+  console.log(`Allowed IPs: ${allowedIPs.join(', ')}`);
+  console.log(`Localhost variations: ${localhostVariations.join(', ')}`);
+  
+  const isAllowed = allowedIPs.includes(ip) || localhostVariations.includes(ip);
+  console.log(`IP ${ip} is ${isAllowed ? 'allowed' : 'denied'}`);
+  
+  return isAllowed;
 }
 
 export function validateAdminPassword(password: string): boolean {

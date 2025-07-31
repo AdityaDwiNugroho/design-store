@@ -64,12 +64,12 @@ function validateRequest(request: NextRequest): boolean {
   ];
   
   // Allow our specific admin routes
-  if (path.startsWith('/admin/newsletter')) {
+  if (path.startsWith('/admin/newsletter') || path.startsWith('/admin/products')) {
     return true;
   }
   
   // Block other admin paths
-  if (path.includes('/admin') && !path.startsWith('/admin/newsletter')) {
+  if (path.includes('/admin') && !path.startsWith('/admin/newsletter') && !path.startsWith('/admin/products')) {
     return false;
   }
   
@@ -103,6 +103,26 @@ export function middleware(request: NextRequest) {
   // Add security headers to response
   const response = NextResponse.next();
   
+  // Security headers to prevent common attacks
+  response.headers.set('X-Content-Type-Options', 'nosniff');
+  response.headers.set('X-Frame-Options', 'DENY');
+  response.headers.set('X-XSS-Protection', '1; mode=block');
+  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  
+  // Content Security Policy
+  response.headers.set('Content-Security-Policy', 
+    "default-src 'self'; " +
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com; " +
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+    "font-src 'self' https://fonts.gstatic.com; " +
+    "img-src 'self' data: https:; " +
+    "connect-src 'self' https://api.stripe.com https://api.resend.com; " +
+    "frame-src https://js.stripe.com; " +
+    "object-src 'none'; " +
+    "base-uri 'self'"
+  );
+  
   // Additional security headers
   response.headers.set('X-DNS-Prefetch-Control', 'off');
   response.headers.set('X-Download-Options', 'noopen');
@@ -110,6 +130,9 @@ export function middleware(request: NextRequest) {
   response.headers.set('Cross-Origin-Embedder-Policy', 'require-corp');
   response.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
   response.headers.set('Cross-Origin-Resource-Policy', 'same-origin');
+  
+  // Strict Transport Security (HTTPS only)
+  response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
   
   // Remove server information
   response.headers.delete('server');

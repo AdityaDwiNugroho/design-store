@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Product } from '@/types';
-import { Star, Eye, Download } from 'lucide-react';
+import { Star, Eye, Download, Github } from 'lucide-react';
 import OptimizedImage from './OptimizedImage';
 import { AddToCart } from './AddToCart';
 
@@ -21,6 +21,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-300"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            priority
           />
           {product.featured && (
             <div className="absolute top-3 left-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-2 py-1 rounded-full text-xs font-medium">
@@ -28,13 +29,13 @@ export default function ProductCard({ product }: ProductCardProps) {
             </div>
           )}
           
-          {/* Hover overlay */}
-          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
-              <button className="bg-white text-gray-900 p-2 rounded-full hover:bg-gray-100 transition-colors">
+          {/* Improved hover overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <div className="flex space-x-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+              <button className="bg-white/90 backdrop-blur-sm text-gray-900 p-2 rounded-full hover:bg-white transition-colors shadow-lg">
                 <Eye className="w-4 h-4" />
               </button>
-              <button className="bg-white text-gray-900 p-2 rounded-full hover:bg-gray-100 transition-colors">
+              <button className="bg-white/90 backdrop-blur-sm text-gray-900 p-2 rounded-full hover:bg-white transition-colors shadow-lg">
                 <Download className="w-4 h-4" />
               </button>
             </div>
@@ -72,6 +73,16 @@ export default function ProductCard({ product }: ProductCardProps) {
             </span>
           )}
         </div>
+
+        {/* Repository Access Badge */}
+        {product.repository && (
+          <div className="mb-3">
+            <div className="flex items-center px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full border border-blue-200 w-fit">
+              <Github className="w-3 h-3 mr-1" />
+              <span>Includes Repository Access</span>
+            </div>
+          </div>
+        )}
 
         {/* Price and Actions */}
         <div className="flex items-center justify-between">

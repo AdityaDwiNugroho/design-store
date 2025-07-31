@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Download, ArrowLeft, Clock, FileText, RefreshCw, Package } from 'lucide-react';
+import { Download, ArrowLeft, Clock, FileText, RefreshCw, Package, Github } from 'lucide-react';
 
 export default function DownloadsDeliveryFAQ() {
   const faqs = [
@@ -22,6 +22,11 @@ export default function DownloadsDeliveryFAQ() {
       question: "What file formats are included?",
       answer: "Our products come in various formats depending on the type: Design files (.sketch, .fig, .psd, .ai), Code files (.html, .css, .js, .tsx), Assets (.png, .jpg, .svg, .ico), and Documentation (.pdf, .md). Each product page lists the specific formats included.",
       icon: Package
+    },
+    {
+      question: "How do I access private GitHub repositories?",
+      answer: "For products that include private repository access (like source code projects), you'll need to request access separately. After purchasing, visit the Repository Access page, enter your purchase email and GitHub username, and you'll automatically receive read-only access to the private repository. This allows you to clone, view, and download the complete source code.",
+      icon: Github
     }
   ];
 
@@ -63,6 +68,27 @@ export default function DownloadsDeliveryFAQ() {
       </div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Repository Access Highlight */}
+        <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 rounded-xl text-white mb-8">
+          <div className="flex items-start">
+            <Github className="w-8 h-8 mr-4 mt-1 flex-shrink-0" />
+            <div className="flex-1">
+              <h2 className="text-xl font-semibold mb-2">GitHub Repository Access</h2>
+              <p className="text-blue-100 mb-4">
+                Some products include access to private GitHub repositories with complete source code. 
+                After purchasing, you can request automatic repository access.
+              </p>
+              <Link
+                href="/repository-access"
+                className="inline-flex items-center px-4 py-2 bg-white text-blue-600 font-medium rounded-lg hover:bg-blue-50 transition-colors"
+              >
+                <Github className="w-4 h-4 mr-2" />
+                Request Repository Access
+              </Link>
+            </div>
+          </div>
+        </div>
+
         {/* FAQ Items */}
         <div className="space-y-8 mb-12">
           {faqs.map((faq, index) => (

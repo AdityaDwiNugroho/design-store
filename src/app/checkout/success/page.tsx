@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { CheckCircle, Download, Mail, Home } from 'lucide-react';
+import { CheckCircle, Download, Mail, Home, Github } from 'lucide-react';
 
 interface CheckoutSuccessProps {
   searchParams: Promise<{
@@ -54,8 +54,31 @@ export default async function CheckoutSuccess({ searchParams }: CheckoutSuccessP
                 <span className="text-gray-700">Download your products immediately from the links provided</span>
               </div>
               <div className="flex items-center">
+                <Github className="w-5 h-5 text-blue-600 mr-3" />
+                <span className="text-gray-700">Request GitHub repository access if included with your product</span>
+              </div>
+              <div className="flex items-center">
                 <CheckCircle className="w-5 h-5 text-blue-600 mr-3" />
                 <span className="text-gray-700">Keep your receipt for future reference</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Repository Access Notice */}
+          <div className="bg-purple-50 rounded-lg p-6 mb-8 border border-purple-200">
+            <div className="flex items-start">
+              <Github className="w-6 h-6 text-purple-600 mr-3 mt-1 flex-shrink-0" />
+              <div className="text-left">
+                <h3 className="font-semibold text-gray-900 mb-2">Need GitHub Repository Access?</h3>
+                <p className="text-gray-600 text-sm mb-3">
+                  If your purchase includes access to private repositories, you can request access using your GitHub username.
+                </p>
+                <Link
+                  href="/repository-access"
+                  className="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium text-sm"
+                >
+                  Request Repository Access →
+                </Link>
               </div>
             </div>
           </div>

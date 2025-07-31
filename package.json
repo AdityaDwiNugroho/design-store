@@ -21,7 +21,9 @@
   "private": false,
   "scripts": {
     "dev": "next dev --turbopack",
+    "dev:stable": "next dev",
     "build": "next build",
+    "build:stable": "NODE_ENV=production next build",
     "start": "next start",
     "lint": "next lint",
     "security-audit": "npm audit --audit-level moderate",
@@ -30,6 +32,7 @@
     "admin-ip-setup": "echo \"🔍 Admin IP Setup Helper\" && echo \"========================\" && echo \"\" && echo \"📍 Development: 127.0.0.1,::1,localhost\" && echo \"🌐 Your Public IP:\" && npm run find-admin-ip && echo \"\" && echo \"🌐 Online IP checkers:\" && echo \"• https://whatismyipaddress.com/\" && echo \"• https://ipinfo.io/\" && echo \"\" && echo \"📝 Add your public IP to .env:\" && echo \"ALLOWED_ADMIN_IPS=127.0.0.1,::1,localhost,YOUR_PUBLIC_IP\""
   },
   "dependencies": {
+    "@octokit/rest": "^22.0.0",
     "@stripe/stripe-js": "^7.7.0",
     "@tailwindcss/line-clamp": "^0.4.4",
     "lucide-react": "^0.534.0",
