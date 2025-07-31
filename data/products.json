@@ -1,0 +1,34 @@
+[
+  {
+    "name": "FilmHub – Premium Film Streaming Platform",
+    "description": "FilmHub is a modern, full-featured film streaming platform built with Laravel and Tailwind CSS. Designed for entrepreneurs, agencies, and developers, FilmHub lets you launch your own Netflix-style streaming service in minutes. It includes user authentication, role-based access (admin, author, user), film management (CRUD), secure video streaming, ratings, comments, achievements, and a beautiful, responsive UI.\nWith enterprise-grade security, commercial licensing, and easy customization, FilmHub is perfect for anyone looking to monetize video content or build a scalable entertainment business.",
+    "price": 43,
+    "category": "templates",
+    "image": "/uploads/product-1753920977762-guipga.png",
+    "tags": [
+      "laravel",
+      "streaming",
+      "video",
+      "film",
+      "netflix-clone",
+      "cms",
+      "php",
+      "tailwindcss",
+      "admin",
+      "secure",
+      "commercial",
+      "entertainment",
+      "movies",
+      "SaaS"
+    ],
+    "featured": true,
+    "downloadUrl": "https://github.com/AdityaDwiNugroho/filmhub-commercial",
+    "id": "1",
+    "repository": {
+      "owner": "AdityaDwiNugroho",
+      "name": "filmhub-commercial",
+      "private": true,
+      "description": "Private repository for FilmHub streaming platform source code"
+    }
+  }
+]
