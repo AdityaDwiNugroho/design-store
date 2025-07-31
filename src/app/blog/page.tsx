@@ -23,6 +23,15 @@ export const metadata: Metadata = {
 export default function BlogIndex() {
   const featuredPosts = [
     {
+      title: "UI Design Trends 2025: What's Next in Digital Design",
+      excerpt: "Explore the latest UI design trends for 2025. From AI-powered interfaces to sustainable design practices, discover what's shaping the future of digital design.",
+      slug: "ui-design-trends-2025",
+      date: "2025-01-31",
+      readTime: "12 min read",
+      category: "Design Trends",
+      featured: true
+    },
+    {
       title: "Best UI Kits 2025: Premium Design Resources",
       excerpt: "Discover the most comprehensive collection of premium UI kits for 2025. These carefully curated design resources will accelerate your development process.",
       slug: "best-ui-kits-2025",
