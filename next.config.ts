@@ -108,16 +108,17 @@ const nextConfig = {
             key: 'Referrer-Policy',
             value: 'strict-origin-when-cross-origin',
           },
-          // Enhanced Content Security Policy for SEO
+          // Enhanced Content Security Policy for SEO and Analytics
           {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com",
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://js.stripe.com",
+              "script-src-elem 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://js.stripe.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "img-src 'self' data: https: blob:",
               "font-src 'self' https://fonts.gstatic.com",
-              "connect-src 'self' https://api.stripe.com https://vitals.vercel-insights.com",
+              "connect-src 'self' https://api.stripe.com https://vitals.vercel-insights.com https://www.google-analytics.com https://www.googletagmanager.com",
               "frame-src 'self' https://js.stripe.com",
               "media-src 'self'",
               "object-src 'none'",
