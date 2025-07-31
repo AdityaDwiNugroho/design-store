@@ -4,7 +4,7 @@ import "./globals.css";
 import { CartProvider } from "@/lib/cart-context";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-// import GoogleAnalytics from "@/components/GoogleAnalytics";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -104,6 +104,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const gaId = process.env.NEXT_PUBLIC_GA_ID;
+  
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -141,6 +143,7 @@ export default function RootLayout({
             })
           }}
         />
+        {gaId && <GoogleAnalytics gaId={gaId} />}
       </head>
       <body className={`${inter.className} antialiased bg-gray-50`}>
         <CartProvider>
