@@ -110,14 +110,15 @@ export function middleware(request: NextRequest) {
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
   
-  // Content Security Policy
+  // Content Security Policy with Google Analytics support
   response.headers.set('Content-Security-Policy', 
     "default-src 'self'; " +
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com; " +
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://www.googletagmanager.com https://www.google-analytics.com https://googletagmanager.com https://analytics.google.com; " +
+    "script-src-elem 'self' 'unsafe-inline' https://js.stripe.com https://www.googletagmanager.com https://www.google-analytics.com https://googletagmanager.com https://analytics.google.com; " +
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
     "font-src 'self' https://fonts.gstatic.com; " +
     "img-src 'self' data: https:; " +
-    "connect-src 'self' https://api.stripe.com https://api.resend.com; " +
+    "connect-src 'self' https://api.stripe.com https://api.resend.com https://www.google-analytics.com https://www.googletagmanager.com https://googletagmanager.com https://analytics.google.com; " +
     "frame-src https://js.stripe.com; " +
     "object-src 'none'; " +
     "base-uri 'self'"

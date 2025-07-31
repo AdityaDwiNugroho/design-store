@@ -75,6 +75,39 @@ const nextConfig = {
   
   // Performance and SEO headers
   async headers() {
+    const isDev = process.env.NODE_ENV === 'development';
+    
+    // More permissive CSP for development
+    const cspDirectives = isDev ? [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://googletagmanager.com https://analytics.google.com https://js.stripe.com",
+      "script-src-elem 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://googletagmanager.com https://analytics.google.com https://js.stripe.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "img-src 'self' data: https: blob:",
+      "font-src 'self' https://fonts.gstatic.com",
+      "connect-src 'self' https://api.stripe.com https://vitals.vercel-insights.com https://www.google-analytics.com https://www.googletagmanager.com https://googletagmanager.com https://analytics.google.com",
+      "frame-src 'self' https://js.stripe.com",
+      "media-src 'self'",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'"
+    ] : [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://googletagmanager.com https://js.stripe.com",
+      "script-src-elem 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://googletagmanager.com https://js.stripe.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "img-src 'self' data: https: blob:",
+      "font-src 'self' https://fonts.gstatic.com",
+      "connect-src 'self' https://api.stripe.com https://vitals.vercel-insights.com https://www.google-analytics.com https://www.googletagmanager.com https://googletagmanager.com https://analytics.google.com",
+      "frame-src 'self' https://js.stripe.com",
+      "media-src 'self'",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "frame-ancestors 'none'",
+      "upgrade-insecure-requests"
+    ];
+
     return [
       {
         source: '/(.*)',
@@ -111,22 +144,7 @@ const nextConfig = {
           // Enhanced Content Security Policy for SEO and Analytics
           {
             key: 'Content-Security-Policy',
-            value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://js.stripe.com",
-              "script-src-elem 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://js.stripe.com",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "img-src 'self' data: https: blob:",
-              "font-src 'self' https://fonts.gstatic.com",
-              "connect-src 'self' https://api.stripe.com https://vitals.vercel-insights.com https://www.google-analytics.com https://www.googletagmanager.com",
-              "frame-src 'self' https://js.stripe.com",
-              "media-src 'self'",
-              "object-src 'none'",
-              "base-uri 'self'",
-              "form-action 'self'",
-              "frame-ancestors 'none'",
-              "upgrade-insecure-requests"
-            ].join('; '),
+            value: cspDirectives.join('; '),
           },
           // Permissions policy
           {
