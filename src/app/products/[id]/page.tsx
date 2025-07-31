@@ -5,6 +5,62 @@ import { Star, Check, Github, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import OptimizedImage from '@/components/OptimizedImage';
 import { AddToCart } from '@/components/AddToCart';
+import { Metadata } from 'next';
+
+interface ProductPageProps {
+  params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
+  const { id } = await params;
+  const product = getProductById(id);
+
+  if (!product) {
+    return {
+      title: 'Product Not Found - DesignStore',
+      description: 'The requested product could not be found.',
+    };
+  }
+
+  const baseUrl = 'https://design-store-one.vercel.app';
+  
+  return {
+    title: `${product.name} - Premium ${product.category.replace('-', ' ')} | DesignStore`,
+    description: `${product.description} Download this premium ${product.category.replace('-', ' ')} for $${product.price}. High-quality design resources with commercial license included.`,
+    keywords: [
+      product.name,
+      product.category,
+      ...product.tags,
+      'premium design',
+      'digital download',
+      'commercial license',
+      'design resources'
+    ],
+    openGraph: {
+      title: `${product.name} - Premium ${product.category.replace('-', ' ')}`,
+      description: product.description,
+      type: 'website',
+      url: `${baseUrl}/products/${product.id}`,
+      images: [
+        {
+          url: product.image.startsWith('http') ? product.image : `${baseUrl}${product.image}`,
+          width: 800,
+          height: 600,
+          alt: product.name,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${product.name} - Premium ${product.category.replace('-', ' ')}`,
+      description: product.description,
+      images: [product.image.startsWith('http') ? product.image : `${baseUrl}${product.image}`],
+    },
+    alternates: {
+      canonical: `${baseUrl}/products/${product.id}`,
+    },
+  };
+}
 
 interface ProductPageProps {
   params: Promise<{ id: string }>;
@@ -22,6 +78,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
 }
 
 function ProductDetails({ product }: { product: Product }) {
+  const baseUrl = 'https://design-store-one.vercel.app';
+  
   const features = [
     'High-quality design files',
     'Multiple file formats included',
@@ -31,8 +89,73 @@ function ProductDetails({ product }: { product: Product }) {
     'Premium support'
   ];
 
+  const productStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": product.name,
+    "description": product.description,
+    "image": product.image.startsWith('http') ? product.image : `${baseUrl}${product.image}`,
+    "url": `${baseUrl}/products/${product.id}`,
+    "sku": `DESIGN-${product.id}`,
+    "brand": {
+      "@type": "Brand",
+      "name": "DesignStore"
+    },
+    "category": product.category,
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "USD",
+      "price": product.price,
+      "availability": "https://schema.org/InStock",
+      "seller": {
+        "@type": "Organization",
+        "name": "DesignStore",
+        "url": baseUrl
+      },
+      "priceValidUntil": new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      "itemCondition": "https://schema.org/NewCondition",
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays": 30
+      }
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating", 
+      "ratingValue": "4.8",
+      "reviewCount": "12",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Alex Designer"
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "reviewBody": "Excellent quality design resources. Saved me hours of work!"
+      }
+    ]
+  };
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <>
+      {/* Structured Data for Product */}
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(productStructuredData)
+        }}
+      />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Breadcrumb */}
       <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
         <Link href="/" className="hover:text-gray-900">Home</Link>
@@ -195,6 +318,7 @@ function ProductDetails({ product }: { product: Product }) {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

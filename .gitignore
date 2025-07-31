@@ -65,8 +65,14 @@ docs/*
 docs/!SECURITY.md
 docs/!STRIPE.md
 
-# Ignore all markdown files but allow README files
+# Ignore all markdown files but allow important documentation
 *.md
 !README.md
 !readme.md
 !Readme.md
+!SECURITY.md
+!ADMIN_SETUP.md
+!NEWSLETTER_*.md
+!API_RESTORED.md
+!CORPORATE-NEWSLETTER-GUIDE.md
+.vercel
