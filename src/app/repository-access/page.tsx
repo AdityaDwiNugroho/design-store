@@ -109,7 +109,7 @@ export default function RepositoryAccess() {
           message: data.error || 'Failed to process request'
         });
       }
-    } catch (error: unknown) {
+    } catch (err: unknown) {
       setResult({
         success: false,
         message: 'Network error. Please check your connection and try again.'

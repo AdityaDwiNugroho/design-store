@@ -66,7 +66,7 @@ export default function AboutPage() {
             About DesignStore
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            We're passionate about providing designers and developers with the highest 
+            We&apos;re passionate about providing designers and developers with the highest 
             quality digital resources to accelerate their creative workflow.
           </p>
         </header>
@@ -76,7 +76,7 @@ export default function AboutPage() {
           <h2>Our Mission</h2>
           <p>
             DesignStore was founded with a simple mission: to democratize access to 
-            premium design resources. We believe that great design shouldn't be limited 
+            premium design resources. We believe that great design shouldn&apos;t be limited 
             by budget constraints or resource availability.
           </p>
 
@@ -128,9 +128,9 @@ export default function AboutPage() {
 
           <h2>Join Our Community</h2>
           <p>
-            DesignStore is more than just a marketplace—it's a community of creative 
-            professionals sharing knowledge, inspiration, and resources. Whether you're 
-            a seasoned designer or just starting your journey, we're here to support 
+            DesignStore is more than just a marketplace—it&apos;s a community of creative 
+            professionals sharing knowledge, inspiration, and resources. Whether you&apos;re 
+            a seasoned designer or just starting your journey, we&apos;re here to support 
             your growth and success.
           </p>
         </div>

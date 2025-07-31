@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, Star, Download, Users } from 'lucide-react';
+import Image from 'next/image';
+import { ArrowRight, Star, Download } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: "Best UI Kits 2025 - Premium Design Resources | DesignStore",
@@ -102,7 +103,7 @@ export default function BestUIKits2025() {
           
           <div className="flex items-center space-x-6 text-sm text-gray-600 mb-8">
             <div className="flex items-center space-x-2">
-              <img src="/author.jpg" alt="Aditya Dwi Nugroho" className="w-8 h-8 rounded-full" />
+              <Image src="/author.jpg" alt="Aditya Dwi Nugroho" width={32} height={32} className="w-8 h-8 rounded-full" />
               <span>By Aditya Dwi Nugroho</span>
             </div>
             <time dateTime="2025-01-01">January 1, 2025</time>
@@ -120,7 +121,7 @@ export default function BestUIKits2025() {
         <div className="prose prose-lg max-w-none">
           <h2>Why UI Kits Are Essential in 2025</h2>
           <p>
-            In today's fast-paced development environment, UI kits have become indispensable 
+            In today&apos;s fast-paced development environment, UI kits have become indispensable 
             tools for designers and developers. They provide consistent, professional-grade 
             components that can dramatically reduce development time while ensuring high-quality results.
           </p>
